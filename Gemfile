@@ -8,6 +8,7 @@ gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
 gem 'bootsnap', '>= 1.4.4', require: false
 
+gem 'devise_token_auth', github: 'lynndylanhurley/devise_token_auth', branch: 'master'
 # gem 'rack-cors'
 
 group :development, :test do
