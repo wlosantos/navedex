@@ -4,11 +4,15 @@ RSpec.describe "Requests Naves", :focus, type: :request do
   
   before { host! 'localhost:3000/api/v1' }
   let!(:user) { create(:user) }
+  let!(:auth_data) { user.create_new_auth_token }
 
   let(:headers) do
     {
-      'Content-Type' => Mime[:json].to_s,
-      'Accpet' => 'application/vnc.navedex.v1'
+      'Content-Type': Mime[:json].to_s,
+      'Accpet': 'application/vnc.navedex.v1',
+      'access-token': auth_data['access-token'],
+      'uid': auth_data['uid'],
+      'client': auth_data['client']
     }
   end
 
