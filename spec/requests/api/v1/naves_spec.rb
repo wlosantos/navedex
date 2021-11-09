@@ -14,7 +14,7 @@ RSpec.describe "Requests Naves", :focus, type: :request do
 
   describe 'GET /naves' do
     before do
-      create_list(:nave, 25, user_id: user.id)
+      create_list(:nave, 25, user: user)
       get '/naves', params: {}, headers: headers
     end
 
@@ -27,5 +27,21 @@ RSpec.describe "Requests Naves", :focus, type: :request do
         expect(json_body[:naves].count).to eq(25)
       end
     end
+  end
+
+  describe 'GET /naves/:id' do
+    let(:nave) { create(:nave, user: user) }
+    before { get "/naves/#{nave.id}", params: {}, headers: headers }
+
+    context "return successful" do
+      it 'status code 200' do
+        expect(response).to have_http_status(200)
+      end
+
+      it 'json for nave' do
+        expect(json_body[:name]).to eq(nave.name)
+      end
+    end
+    
   end
 end
