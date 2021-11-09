@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   let(:user) { build(:user) }
   
-  context "must be present" do
+  context "attributes must be present" do
     it { is_expected.to respond_to :email }
     it { is_expected.to respond_to :password }
     it { is_expected.to respond_to :password_confirmation }
@@ -14,7 +14,7 @@ RSpec.describe User, type: :model do
       it { expect(user).to be_valid }
     end
 
-    context 'failure' do
+    context 'validations' do
       it { is_expected.to validate_presence_of :email }
       it { is_expected.to allow_value('contato@email.com').for(:email) } 
       it { is_expected.to validate_presence_of :password }
