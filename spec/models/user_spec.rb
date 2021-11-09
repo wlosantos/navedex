@@ -1,31 +1,24 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-
   let(:user) { build(:user) }
   
-  describe "must be present" do
-    it { expect(user).to respond_to :email }
-    it { expect(user).to respond_to :password }
-    it { expect(user).to respond_to :password_confirmation }
+  context "must be present" do
+    it { is_expected.to respond_to :email }
+    it { is_expected.to respond_to :password }
+    it { is_expected.to respond_to :password_confirmation }
   end
   
-  describe 'create user' do
-
+  describe 'create' do
     context 'successful' do
       it { expect(user).to be_valid }
     end
 
     context 'failure' do
-      it 'email don\'t be blanck' do
-        user.email = ''
-        expect(user).not_to be_valid
-      end
-
-      it 'password don\'t be blanck' do
-        user.password = ''
-        expect(user).not_to be_valid
-      end
+      it { is_expected.to validate_presence_of :email }
+      it { is_expected.to allow_value('contato@email.com').for(:email) } 
+      it { is_expected.to validate_presence_of :password }
+      it { is_expected.to validate_confirmation_of :password }
     end
   end
 
