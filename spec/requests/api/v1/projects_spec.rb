@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Request Projects", :focus, type: :request do
+RSpec.describe "Request Projects", type: :request do
 
   before { host! 'localhost:3000/api/v1' }
   let!(:user) { create(:user) }
