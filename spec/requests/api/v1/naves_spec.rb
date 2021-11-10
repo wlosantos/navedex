@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Requests Naves", type: :request do
+RSpec.describe "Requests Naves", :focus, type: :request do
   
   before { host! 'localhost:3000/api/v1' }
   let!(:user) { create(:user) }
@@ -49,7 +49,7 @@ RSpec.describe "Requests Naves", type: :request do
     
   end
 
-  describe 'POST /naves', :focus do
+  describe 'POST /naves' do
     let(:nave) { create(:nave, user: user) }
     before { post '/naves', params: nave_params.to_json, headers: headers }
 
@@ -67,4 +67,44 @@ RSpec.describe "Requests Naves", type: :request do
       end
     end
   end
+
+  describe 'PUT /naves/:id' do
+    let(:nave) { create(:nave, user: user) }
+    before { put "/naves/#{nave.id}", params: nave_params.to_json, headers: headers }
+
+    context 'return successful' do
+      let(:nave_params) { {job_role: 'Desenvolvedor Jr'} }
+
+      it 'return status code 200' do
+        expect(response).to have_http_status(200)
+      end
+      it 'json data for the nave' do
+        expect(json_body[:name]).to eq(nave.name)
+      end
+    end
+
+    context 'return failure' do
+      let(:nave_params) { {name: ''} }
+
+      it 'return status code 422' do
+        expect(response).to have_http_status(422)
+      end
+
+      it 'return message errors' do
+        expect(json_body[:errors][0]).to include("can't be blank")
+      end
+    end
+  end
+
+  describe 'DELETE /naves/:id' do
+    let(:nave) { create(:nave, user: user) }
+    before { delete "/naves/#{nave.id}", params: {}, headers: headers }
+
+    context 'successful - delete nave' do
+      it 'return status code 204' do
+        expect(response).to have_http_status(204)
+      end
+    end
+
+  end 
 end
