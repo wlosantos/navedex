@@ -1,6 +1,6 @@
 class Api::V1::NavesController < Api::V1::BaseController
 
-  before_action :set_nave, only: %i[ show ]
+  before_action :set_nave, only: %i[ show update ]
 
   def index
     naves = current_api_user.naves.all
@@ -18,6 +18,14 @@ class Api::V1::NavesController < Api::V1::BaseController
       render json: nave, status: :created
     else
       render json: { errors: nave.errors.full_messages}, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    if @nave.update nave_params
+      render json: @nave, status: :ok
+    else
+      render json: { errors: @nave.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
