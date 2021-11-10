@@ -71,4 +71,29 @@ RSpec.describe "Request Projects", :focus, type: :request do
     end
   end
 
+  describe 'PUT /projects/:id' do
+    let(:project) { create(:project, nave: nave) }
+    before do
+      put "/naves/#{nave_id}/projects/#{project.id}",
+      params: project_params.to_json,
+      headers: headers
+    end
+
+    context 'return successful' do
+      let(:project_params) { { name: 'Desenvolvimento de apps' } }
+
+      it 'return status code 200' do
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'return failure' do
+      let(:project_params) { {name: ''} }
+
+      it 'return status code 422' do
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+  end
+
 end
