@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Requests Naves", type: :request do
+RSpec.describe "Requests Naves", :focus, type: :request do
   
   before { host! 'localhost:3000/api/v1' }
   let!(:user) { create(:user) }
@@ -68,7 +68,7 @@ RSpec.describe "Requests Naves", type: :request do
     end
   end
 
-  describe 'PUT /naves/:id', :focus do
+  describe 'PUT /naves/:id' do
     let(:nave) { create(:nave, user: user) }
     before { put "/naves/#{nave.id}", params: nave_params.to_json, headers: headers }
 
@@ -95,4 +95,16 @@ RSpec.describe "Requests Naves", type: :request do
       end
     end
   end
+
+  describe 'DELETE /naves/:id' do
+    let(:nave) { create(:nave, user: user) }
+    before { delete "/naves/#{nave.id}", params: {}, headers: headers }
+
+    context 'successful - delete nave' do
+      it 'return status code 204' do
+        expect(response).to have_http_status(204)
+      end
+    end
+
+  end 
 end
