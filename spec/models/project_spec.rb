@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Project, :focus, type: :model do
+RSpec.describe Project, type: :model do
   
   describe 'attributes must be present' do
     it { is_expected.to respond_to :name }
