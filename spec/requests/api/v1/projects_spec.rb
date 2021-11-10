@@ -49,4 +49,26 @@ RSpec.describe "Request Projects", :focus, type: :request do
     end
   end
 
+  describe 'POST /projects' do
+    let(:project) { create(:project, nave: nave) }
+    before { post "/naves/#{nave_id}/projects", params: project_params.to_json, headers: headers }
+
+    context 'return successful' do
+      let(:project_params) { attributes_for(:project) }
+      it 'status code 201' do
+        expect(response).to have_http_status(:created)
+      end
+    end
+
+    context 'return failure' do
+      let(:project_params) { attributes_for(:project, name: '') }
+      it 'status code 422' do
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+      it 'errors messages' do
+        expect(json_body[:errors][0]).to include('can\'t be blank')
+      end
+    end
+  end
+
 end

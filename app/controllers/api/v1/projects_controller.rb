@@ -12,6 +12,16 @@ class Api::V1::ProjectsController < Api::V1::BaseController
     render json: @project, status: :ok
   end
 
+  def create
+    project = @nave.projects.build(project_params)
+
+    if project.save
+      render json: project, status: :created
+    else
+      render json: {errors: project.errors.full_messages }, status: :unprocessable_entity 
+    end
+  end
+
   private
 
   def set_nave
@@ -20,5 +30,9 @@ class Api::V1::ProjectsController < Api::V1::BaseController
 
   def set_project
     @project = Project.find(params[:id])
+  end
+
+  def project_params
+    params.require(:project).permit(:name)
   end
 end
