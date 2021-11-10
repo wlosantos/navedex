@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Requests Naves", :focus, type: :request do
+RSpec.describe "Requests Naves", type: :request do
   
   before { host! 'localhost:3000/api/v1' }
   let!(:user) { create(:user) }
