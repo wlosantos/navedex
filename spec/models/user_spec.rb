@@ -8,6 +8,10 @@ RSpec.describe User, type: :model do
     it { is_expected.to respond_to :password }
     it { is_expected.to respond_to :password_confirmation }
   end
+
+  context "associations" do
+    it { is_expected.to have_many :naves }
+  end
   
   describe 'create' do
     context 'successful' do
