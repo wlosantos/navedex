@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Users - requests", :focus, type: :request do
+RSpec.describe "Users - requests", type: :request do
   let!(:user) { create(:user) }
   let!(:user_id) { user.id }
   let!(:auth_data) { user.create_new_auth_token }
@@ -70,4 +70,40 @@ RSpec.describe "Users - requests", :focus, type: :request do
       end
     end
   end
+
+  # describe 'VALIDATE TOKEN /auth/validate_token' do
+  #   before { get '/auth/validate_token', params: {}, headers: headers }
+
+  #   context 'successful - token is valid' do
+  #     it 'return status code 200' do
+  #       expect(response).to have_http_status(200)
+  #     end
+  #   end
+  # end
+
+  # describe 'SIGN OUT /auth/sign_out' do
+  #   before { delete '/auth/sign_out', params: {}, headers: headers }
+
+  #   context 'successfull - delete user' do
+  #     it 'return status code 204' do
+  #       expect(response).to have_http_status(204)
+  #     end
+  #   end
+  # end
+
+  # describe 'UPDATE /auth' do
+  #   before { put '/auth', params: user_params.to_json, headers: headers }
+
+  #   context 'successful - update valid' do
+  #     let(:user_params) { {password: '654321'} }
+
+  #     it 'return status code 200' do
+  #       expect(response).to have_http_status(200)
+  #     end
+
+  #     it 'return data for the updated' do
+  #       expect(json_body[:data][:email]).to eq(user_params[:email])
+  #     end
+  #   end
+  # end
 end
