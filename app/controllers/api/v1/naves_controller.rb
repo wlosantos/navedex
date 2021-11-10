@@ -3,7 +3,7 @@ class Api::V1::NavesController < Api::V1::BaseController
   before_action :set_nave, only: %i[ show ]
 
   def index
-    naves = Nave.all
+    naves = current_api_user.naves.all
     render json: {naves: naves, message: 'success' }, status: :ok
   end
 
@@ -14,6 +14,6 @@ class Api::V1::NavesController < Api::V1::BaseController
   private
 
   def set_nave
-    @nave = Nave.find(params[:id])
+    @nave = current_api_user.naves.find(params[:id])
   end
 end
