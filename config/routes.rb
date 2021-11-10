@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     
     namespace :v1, constraints: ApiVersionConstraint.new(version: 1, default: true) do
       resources :naves, except: %i[ edit new ] do
-        resources :projects, only: %i[ index show create update ]
+        resources :projects, only: %i[ index show create update destroy ]
       end
     end
   end

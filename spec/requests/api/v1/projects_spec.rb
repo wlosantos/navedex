@@ -96,4 +96,19 @@ RSpec.describe "Request Projects", :focus, type: :request do
     end
   end
 
+  describe 'DELETE /projects/:id' do
+    let(:project) { create(:project, nave: nave) }
+    before do
+      delete "/naves/#{nave_id}/projects/#{project.id}",
+      params: {},
+      headers: headers
+    end
+
+    context 'successful - delete project' do
+      it 'return status code 200' do
+        expect(response).to have_http_status(:ok)
+      end
+    end
+  end
+
 end

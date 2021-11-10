@@ -1,7 +1,7 @@
 class Api::V1::ProjectsController < Api::V1::BaseController
 
   before_action :set_nave
-  before_action :set_project, only: %i[ show update ]
+  before_action :set_project, only: %i[ show update destroy ]
 
   def index
     projects = @nave.projects.all
@@ -27,6 +27,14 @@ class Api::V1::ProjectsController < Api::V1::BaseController
       render json: @project, status: :ok
     else
       render json: { errors: @project.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    if @project.destroy
+      head :ok
+    else
+      head :unprocessable_entity
     end
   end
 
