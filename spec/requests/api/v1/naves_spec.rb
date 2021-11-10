@@ -48,4 +48,23 @@ RSpec.describe "Requests Naves", type: :request do
     end
     
   end
+
+  describe 'POST /naves', :focus do
+    let(:nave) { create(:nave, user: user) }
+    before { post '/naves', params: nave_params.to_json, headers: headers }
+
+    context 'return successful' do
+      let(:nave_params) { attributes_for(:nave) }
+      it 'status code 201' do
+        expect(response).to have_http_status(201)
+      end
+    end
+
+    context 'return failure' do
+      let(:nave_params) { attributes_for(:nave, name: '')}
+      it 'status code 422' do
+        expect(response).to have_http_status(422)
+      end
+    end
+  end
 end
