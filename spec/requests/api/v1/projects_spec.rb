@@ -34,4 +34,19 @@ RSpec.describe "Request Projects", :focus, type: :request do
     end
   end
 
+  describe 'GET /projects/:id' do
+    let(:project) { create(:project, nave: nave) }
+    before { get "/naves/#{nave_id}/projects/#{project.id}", params: {}, headers: headers }
+
+    context 'return sucessful' do
+      it 'status code 200' do
+        expect(response).to have_http_status(200)
+      end
+
+      it 'json for project' do
+        expect(json_body[:name]).to eq(project.name)
+      end
+    end
+  end
+
 end
