@@ -3,27 +3,19 @@ class Api::V1::NavesController < Api::V1::BaseController
   before_action :set_nave, only: %i[ show update destroy ]
 
   def index
-    naves = current_api_user.naves.all
+    naves = current_api_user.naves.list_naves
     render json: naves, status: :ok
   end
 
   def show
-    render json: {
-        id: @nave.id,
-        name: @nave.name,
-        birthdate: @nave.birthdate.strftime("%Y-%m-%d"),
-        admision_job: @nave.admision_job.strftime("%Y-%m-%d"),
-        job_role: @nave.job_role,
-        projects: @nave.projects.map{ |proj| {id: proj.id, name: proj.name} }
-        }, 
-        status: :ok
+    render json: @nave.description_nave, status: :ok
   end
 
   def create
     nave = current_api_user.naves.build nave_params
 
     if nave.save
-      render json: nave, status: :created
+      render json: nave.store_nave, status: :created
     else
       render json: { errors: nave.errors.full_messages}, status: :unprocessable_entity
     end
@@ -31,7 +23,7 @@ class Api::V1::NavesController < Api::V1::BaseController
 
   def update
     if @nave.update nave_params
-      render json: @nave, status: :ok
+      render json: @nave.store_nave, status: :ok
     else
       render json: { errors: @nave.errors.full_messages }, status: :unprocessable_entity
     end
