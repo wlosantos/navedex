@@ -37,6 +37,11 @@ class Api::V1::NavesController < Api::V1::BaseController
     end
   end
 
+  def projects
+    projects = Projects.all
+    render json: projects
+  end
+
   private
 
   def set_nave
