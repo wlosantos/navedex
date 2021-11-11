@@ -4,11 +4,19 @@ class Api::V1::NavesController < Api::V1::BaseController
 
   def index
     naves = current_api_user.naves.all
-    render json: { naves: naves }, status: :ok
+    render json: naves, status: :ok
   end
 
   def show
-    render json: @nave, status: :ok
+    render json: {
+        id: @nave.id,
+        name: @nave.name,
+        birthdate: @nave.birthdate.strftime("%Y-%m-%d"),
+        admision_job: @nave.admision_job.strftime("%Y-%m-%d"),
+        job_role: @nave.job_role,
+        projects: @nave.projects.map{ |proj| {id: proj.id, name: proj.name} }
+        }, 
+        status: :ok
   end
 
   def create

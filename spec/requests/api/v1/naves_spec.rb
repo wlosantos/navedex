@@ -28,7 +28,7 @@ RSpec.describe "Requests Naves", type: :request do
       end
 
       it 'naves from the database' do
-        expect(json_body[:naves].count).to eq(25)
+        expect(json_body.count).to eq(25)
       end
     end
   end
