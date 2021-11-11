@@ -20,7 +20,7 @@ RSpec.describe "Request Projects", type: :request do
   describe 'GET /projects' do
     before do
       create_list(:project, 10, nave: nave)
-      get "/naves/#{nave_id}/projects", params: {id: nave_id}, headers: headers
+      get "/naves/#{nave_id}/projects", params: {}, headers: headers
     end
 
     context 'successful - return list' do
@@ -29,7 +29,7 @@ RSpec.describe "Request Projects", type: :request do
       end
 
       it 'database projects' do
-        expect(json_body[:projects].count).to eq(10)
+        expect(json_body.count).to eq(10)
       end
     end
   end
