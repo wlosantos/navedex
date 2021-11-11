@@ -4,8 +4,8 @@ class Api::V1::ProjectsController < Api::V1::BaseController
   before_action :set_project, only: %i[ show update destroy ]
 
   def index
-    projects = @nave.projects.all
-    render json:{ projects: projects }, status: :ok
+    projects = Project.all
+    render json: projects, status: :ok
   end
 
   def show
