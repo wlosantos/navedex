@@ -13,4 +13,21 @@ class Project < ApplicationRecord
       }
     end
   end
+
+  def project_with_nave
+    list = {}
+    if self.id.present?
+      list = {
+        id: self.id,
+        name: self.name,
+        nave: {
+          id: self.nave.id,
+          name: self.nave.name,
+          birthdate: self.nave.birthdate,
+          admision_job: self.nave.admision_job,
+          job_role: self.nave.job_role
+        }
+      }
+    end
+  end
 end

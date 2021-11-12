@@ -7,28 +7,33 @@ class Api::V1::ProjectsController < Api::V1::BaseController
     render json: projects, status: :ok
   end
 
-  # def show
-  #   render json: @project, status: :ok
-  # end
+  def show
+    render json: @project.project_with_nave(current_api_user.id), status: :ok
+  rescue
+    head 204
+  end
 
-  # def create
-  #   @nave = Nave.find(params[:nave_id])
-  #   project = @nave.projects.build(project_params)
+  def create
+    @nave = Nave.find(params[:nave_id])
+    project = @nave.projects.build(project_params)
 
-  #   if project.save
-  #     render json: project, status: :created
-  #   else
-  #     render json: {errors: project.errors.full_messages }, status: :unprocessable_entity 
-  #   end
-  # end
+    if project.save
+      project_store = { id: project.id, name: project.name }
+      render json: project_store, status: :created
+    else
+      render json: {errors: project.errors.full_messages }, status: :unprocessable_entity 
+    end
+  end
 
-  # def update
-  #   if @project.update(project_params)
-  #     render json: @project, status: :ok
-  #   else
-  #     render json: { errors: @project.errors.full_messages }, status: :unprocessable_entity
-  #   end
-  # end
+  def update
+    if @project.update(project_params)
+      project_store = { id: @project.id, name: @project.name }
+
+      render json: project_store, status: :ok
+    else
+      render json: { errors: @project.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
 
   # def destroy
   #   if @project.destroy

@@ -38,23 +38,6 @@ RSpec.describe "Request Projects", :focus, type: :request do
     end
   end
 
-  # describe 'GET /projects' do
-  #   before do
-  #     create_list(:project, 10, nave: nave)
-  #     get "/naves/#{nave_id}/projects", params: {}, headers: headers
-  #   end
-
-  #   context 'successful - return list' do
-  #     it 'status code 200' do
-  #       expect(response).to have_http_status(200)
-  #     end
-
-  #     it 'database projects' do
-  #       expect(json_body.count).to eq(10)
-  #     end
-  #   end
-  # end
-
   # describe 'GET /projects/:id' do
   #   let(:project) { create(:project, nave: nave) }
   #   before { get "/naves/#{nave_id}/projects/#{project.id}", params: {}, headers: headers }
