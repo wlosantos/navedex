@@ -1,22 +1,25 @@
 class Api::V1::ProjectsController < Api::V1::BaseController
 
-  before_action :set_nave
   before_action :set_project, only: %i[ show update destroy ]
 
   def index
-    projects = Project.all
+    projects = Project.total_user_projects(current_api_user)
     render json: projects, status: :ok
   end
 
   def show
-    render json: @project, status: :ok
+    render json: @project.project_with_nave(current_api_user.id), status: :ok
+  rescue
+    head 204
   end
 
   def create
+    @nave = Nave.find(params[:nave_id])
     project = @nave.projects.build(project_params)
 
     if project.save
-      render json: project, status: :created
+      project_store = { id: project.id, name: project.name }
+      render json: project_store, status: :created
     else
       render json: {errors: project.errors.full_messages }, status: :unprocessable_entity 
     end
@@ -24,25 +27,23 @@ class Api::V1::ProjectsController < Api::V1::BaseController
 
   def update
     if @project.update(project_params)
-      render json: @project, status: :ok
+      project_store = { id: @project.id, name: @project.name }
+
+      render json: project_store, status: :ok
     else
       render json: { errors: @project.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
-  def destroy
-    if @project.destroy
-      head :ok
-    else
-      head :unprocessable_entity
-    end
-  end
+  # def destroy
+  #   if @project.destroy
+  #     head :ok
+  #   else
+  #     head :unprocessable_entity
+  #   end
+  # end
 
   private
-
-  def set_nave
-    @nave = Nave.find(params[:nave_id])
-  end
 
   def set_project
     @project = Project.find(params[:id])
