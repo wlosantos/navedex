@@ -9,16 +9,16 @@ development:
   <<: *default
   username: <%= Rails.application.credentials[:USER_DB] %>
   password: <%= Rails.application.credentials[:PASS_DB] %>
-  database: navedex_api_development
+  database: navedex_development
 
 test:
   <<: *default
   username: <%= Rails.application.credentials[:USER_DB] %>
   password: <%= Rails.application.credentials[:PASS_DB] %>
-  database: navedex_api_test
+  database: navedex_test
 
 production:
   <<: *default
-  database: navedex_api_production
+  database: navedex_production
   username: navedex_api
   password: <%= ENV['NAVEDEX_API_DATABASE_PASSWORD'] %>
